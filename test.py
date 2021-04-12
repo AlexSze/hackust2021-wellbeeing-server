@@ -1,3 +1,6 @@
+from flask import Flask, request, make_response
+import random
+
 def extractInfo(data):
   return {
       "session_id": data["session"]["session_id"],
@@ -36,9 +39,6 @@ def getResponse(info, hasUnlocked):
   print(response)
   return response
 
-
-from flask import Flask, request, make_response
-import random
 
 app = Flask(__name__)
 
