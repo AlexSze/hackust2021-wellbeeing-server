@@ -1,6 +1,8 @@
 from flask import Flask, request, make_response
 import random
 
+from servo import *
+
 def extractInfo(data):
   return {
       "session_id": data["session"]["session_id"],
@@ -59,14 +61,20 @@ def webhook():
 
         requestInfo = extractInfo(data)
 
-        hasUnlocked = unlock()
+        hasUnlocked = toggleLock()
         content = getResponse(requestInfo, hasUnlocked)
 
         return content, 200
 
 # do unlock action
 # return whether has unlocked successfully
-def unlock():
-  return random.uniform(0, 1) > 0.5  # dummy
+def toggleLock():
+    if isLocked:
+        print('unlock')
+        unlock()
+    else:
+        print('lock')
+        lock()
+    return random.uniform(0, 1) > 0.5
 
 app.run(debug=True, port=80)
