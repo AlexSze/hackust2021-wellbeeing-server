@@ -1,19 +1,25 @@
 from serial import Serial
 from os import listdir
-dev = listdir("/dev/")
 tty = "/dev/"
-for device in dev:
-	if "ttyUSB" in device:
-		tty = tty + device
-		break
-s = Serial(tty, 9600)
 isLocked = True
+s = 0
+try:
+	dev = listdir("/dev/")
+	for device in dev:
+		if "ttyUSB" in device:
+			tty = tty + device
+			break
+	s = Serial(tty, 9600)
+except:
+	print("serial not found, testing mode")
 def lock():
 	global s
-	s.write(b"1")
+	if s != 0:
+		s.write(b"1")
 	isLocked = True
 
 def unlock():
 	global s
-	s.write(b"2")
+	if s != 0:
+		s.write(b"2")
 	isLocked = False
