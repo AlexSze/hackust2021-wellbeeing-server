@@ -25,11 +25,11 @@ def getResponse(info, hasDone):
           "open_mic":True,
           "to_speak":{
             "type":0,
-            "text":"海浪的声音来咯"
+            "text":""
           },
           "to_display":{
             "type":0,
-            "text":"海浪的声音来咯"
+            "text":""
           },
           "log_info":{}        
         },
@@ -58,6 +58,7 @@ def getResponse(info, hasDone):
   else:
     response_text = "抱歉，聽不懂。"
   response["response"]["to_speak"]["text"] = response_text
+  response["response"]["to_display"]["text"] = response_text
 
   print('------------------------response---------------------------')
   printJson(response)
