@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo python3 ./test.py
+sudo python3 ./server.py
