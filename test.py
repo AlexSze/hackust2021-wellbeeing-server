@@ -2,7 +2,7 @@ from flask import Flask, request, make_response
 import json
 import random
 
-from servo import *
+from servo import unlock, lock, isLocked
 
 def printJson(o):
   parsed = json.loads(json.dumps(o))
@@ -13,9 +13,10 @@ def extractInfo(data):
       "session_id": data["session"]["session_id"],
       # "user_id": data["session"]["user"]["user_id"],
       # "request_id": data["request"]["request_id"]
+      "intent_name": data["request"]["slot_info"]["intent_name"],
   }
 
-def getResponse(info, hasUnlocked):
+def getResponse(info, hasDone):
   response = {  # example response
         "is_session_end":False,
         "version": "1.0",
@@ -37,10 +38,26 @@ def getResponse(info, hasUnlocked):
   # copy session id from request
   # response["session_attributes"]["session"]["sessionID"] = info["session_id"]
 
-  if hasUnlocked:
-    response["response"]["to_speak"]["text"] = "正在解鎖"
+  # Make response text from intent and hasDone status
+  intent = info["intent_name"]
+  response_text = ""
+  if intent == "Mi_Welcome":
+    response_text = "歡迎使用，請在緊急時大喊「救命」來發出求救信號。"
+  elif intent == "Mi_Default":
+    response_text = "請在緊急時大喊「救命」來發出求救信號。"
+  elif intent == "unlock":
+    if hasDone:
+      response_text = "正在解鎖。請說「取消」來重新上鎖。"
+    else:
+      response_text = "抱歉，無法解鎖。"
+  elif intent == "lock":
+    if hasDone:
+      response_text = "正在重新上鎖。"
+    else:
+      response_text = "抱歉，無法上鎖。"
   else:
-    response["response"]["to_speak"]["text"] = "声音来咯?"
+    response_text = "抱歉，聽不懂。"
+  response["response"]["to_speak"]["text"] = response_text
 
   print('------------------------response---------------------------')
   printJson(response)
@@ -67,8 +84,20 @@ def webhook():
 
         requestInfo = extractInfo(data)
 
-        hasUnlocked = toggleLock()
-        content = getResponse(requestInfo, hasUnlocked)
+        # Do lock / unlock
+        hasDone = None
+        intent = requestInfo["intent_name"]
+        if intent == "unlock":
+          print('unlock')
+          unlock()
+          hasDone = True
+        elif intent == "lock":
+          print('lock')
+          lock()
+          hasDone = True
+        # toggleLock()
+        
+        content = getResponse(requestInfo, hasDone)
 
         return content, 200
 
