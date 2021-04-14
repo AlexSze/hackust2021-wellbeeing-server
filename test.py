@@ -2,7 +2,9 @@ from flask import Flask, request, make_response
 import json
 import random
 
-from servo import unlock, lock, isLocked
+from servo import unlock, lock
+
+isLocked = True
 
 def printJson(o):
   parsed = json.loads(json.dumps(o))
@@ -90,12 +92,13 @@ def webhook():
         intent = requestInfo["intent_name"]
         if intent == "unlock":
           print('unlock')
-          unlock()
-          hasDone = True
+          hasDone = unlock()
+          # hasDone = True
         elif intent == "lock":
           print('lock')
-          lock()
-          hasDone = True
+          hasDone = lock()
+          # hasDone = True
+
         # toggleLock()
         
         content = getResponse(requestInfo, hasDone)
@@ -105,12 +108,12 @@ def webhook():
 # do unlock action
 # return whether has unlocked successfully
 def toggleLock():
-    if isLocked:
-        print('unlock')
-        unlock()
-    else:
-        print('lock')
-        lock()
-    return random.uniform(0, 1) > 0.5
+  global isLocked
+  if isLocked:
+    print('unlock')
+    unlock()
+  else:
+    print('lock')
+    lock()
 
 app.run(debug=True, port=80)
