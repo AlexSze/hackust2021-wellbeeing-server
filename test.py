@@ -1,7 +1,12 @@
 from flask import Flask, request, make_response
+import json
 import random
 
 from servo import *
+
+def printJson(o):
+  parsed = json.loads(json.dumps(o))
+  print(json.dumps(parsed, indent=4, sort_keys=True))
 
 def extractInfo(data):
   return {
@@ -30,15 +35,15 @@ def getResponse(info, hasUnlocked):
       }
 
   # copy session id from request
-  response["session_attributes"]["session"]["sessionID"] = info["session_id"]
+  # response["session_attributes"]["session"]["sessionID"] = info["session_id"]
 
   if hasUnlocked:
-    response["response"]["to_speak"] = "海浪的声音"
+    response["response"]["to_speak"]["text"] = "正在解鎖"
   else:
-    response["response"]["to_speak"] = "声音来咯?"
+    response["response"]["to_speak"]["text"] = "声音来咯?"
 
-  print('----------------response---------------')
-  print(response)
+  print('------------------------response---------------------------')
+  printJson(response)
   return response
 
 
@@ -46,6 +51,7 @@ app = Flask(__name__)
 
 @app.route("/", methods=['POST'])
 def webhook():
+    print('=============================================================')
     try:
         data = request.get_json()
     except:
@@ -56,8 +62,8 @@ def webhook():
         }
         return content, 406
     else:
-        print('----------------request-----------------')
-        print(str(data))
+        print('------------------------request--------------------------')
+        printJson(data)
 
         requestInfo = extractInfo(data)
 
