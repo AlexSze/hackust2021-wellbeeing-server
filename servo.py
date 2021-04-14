@@ -1,7 +1,7 @@
 from serial import Serial
 from os import listdir
+
 tty = "/dev/"
-isLocked = True
 s = 0
 try:
 	dev = listdir("/dev/")
@@ -12,14 +12,21 @@ try:
 	s = Serial(tty, 9600)
 except:
 	print("serial not found, testing mode")
+
+# return True if success
 def lock():
 	global s
 	if s != 0:
 		s.write(b"1")
-	isLocked = True
+		return True
+	else:		# no servo is connected
+		return False
 
+# return True if success
 def unlock():
 	global s
-	if s != 0:
+	if s != 0:		
 		s.write(b"2")
-	isLocked = False
+		return True
+	else:		# no servo is connect
+		return False
