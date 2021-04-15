@@ -8,6 +8,10 @@
 | run.sh                 | Run script to initialize the server              |
 | server.py              | Main server script to interface with XiaoAi      |
 | servo.py               | Library to interface with the microcontroller    |
+| install.sh | Install script to put service in place |
+| ngrok.service | ngrok service to open up a tunnel |
+| ngrok.yml | ngrok configuration (authtoken needed) |
+| wellbeeing.service | main service to interface with XiaoAi |
 
 to be updated
 
