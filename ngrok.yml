@@ -1,0 +1,13 @@
+authtoken: "insert-your-key-here"
+json_resolver_url: ""
+dns_resolver_ips: []
+console_ui: false
+log_format: logfmt
+log: /home/pi/ngrok.log
+region: eu
+web_addr: false
+tunnels:
+  http:
+    proto: http
+    addr: 80
+    inspect: false

@@ -1,0 +1,16 @@
+[Unit]
+Description=ngrok tunnel to open port 80 with SSL support
+After=syslog.target network.target
+
+[Service]
+PrivateTmp=true
+Type=simple
+Restart=always
+RestartSec=1min
+StandardOutput=null
+StandardError=null
+ExecStart=/home/pi/wellbeeing/ngrok start -config /home/pi/wellbeeing/ngrok.yml --all
+ExecStop=/usr/bin/killall ngrok
+
+[Install]
+WantedBy=multi-user.target
