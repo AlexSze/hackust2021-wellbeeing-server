@@ -1,0 +1,14 @@
+[Unit]
+Description=Hackathon 2021 XiaoAi Server service
+After=syslog.target network.target
+
+[Service]
+ExecStart=/home/pi/wellbeeing/run.sh
+KillMode=process
+Restart=always
+RestartSec=1min
+StandardOutput=null
+StandardError=null
+
+[Install]
+WantedBy=multi-user.target
