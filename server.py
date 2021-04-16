@@ -111,8 +111,10 @@ def toggleLock():
   if isLocked:
     print('unlock')
     unlock()
+    isLocked = False
   else:
     print('lock')
     lock()
+    isLocked = True
 
 app.run(debug=True, port=80)
