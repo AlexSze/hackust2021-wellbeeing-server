@@ -19,8 +19,6 @@ This repository is a Flask Server to communicate with the XiaoAi Platform. It re
 | ngrok.yml | ngrok configuration (authtoken needed) |
 | wellbeeing.service | main service to interface with XiaoAi |
 
-to be updated
-
 ## Installation
 
 Since this is built for deployment on a raspberry pi, username of `pi` is required in the current implementation
