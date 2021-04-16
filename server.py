@@ -1,6 +1,5 @@
 from flask import Flask, request, make_response
 import json
-import random
 
 from servo import unlock, lock
 
