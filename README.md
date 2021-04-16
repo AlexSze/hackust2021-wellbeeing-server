@@ -2,7 +2,9 @@
 
 Our team, Up To Data's submission to HackUST 2021
 
-This repository is a Flask Server for XiaoAi Platform. It responses to the requests from XiaoAi's application and make responses according to the intent of the request. It also controls the door (i.e. servo).
+This is only the back-end server part of our submission to bridge the hardware and XiaoAi, please refer to https://github.com/AlexSze/hackust2021-wellbeeing for the front-end application.
+
+This repository is a Flask Server to communicate with the XiaoAi Platform. It responses to the requests from XiaoAi's application and make responses according to the intent of the request. It also controls the door (i.e. servo).
 
 | Files                  | Function                                         |
 | ---------------------- | ------------------------------------------------ |
